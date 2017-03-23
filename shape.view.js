@@ -1,9 +1,11 @@
 
 class ShapeView {
 
-    constructor(app) {
-        this.app = app
+    constructor(game) {
+        this.app = game.app
 
+        this.game = game
+        let self = this
         let canvas = document.getElementById('canvas')
         this.app.renderer.view.style.display = "block";
         this.app.renderer.view.style.marginLeft = "auto";
@@ -21,11 +23,20 @@ class ShapeView {
         this.gravityInp = document.getElementById('gravity')
         this.shapeSpeedInp = document.getElementById('shapeSpeed')
 
-        console.log(this.gravityMinBtn)
-        this.gravityMinBtn.addEventListener('click',app.decreaseGravity)
-        this.gravityMaxBtn.addEventListener('click',app.increaseGravity)
-        this.shapeSpeedMinBtn.addEventListener('click',app.decreaseSpeed)
-        this.shapeSpeedMaxBtn.addEventListener('click',app.increaseSpeed)
+        this.gravityMinBtn.addEventListener('click',function(){
+            self.game.decreaseGravity()
+        })
+
+        this.gravityMaxBtn.addEventListener('click',function(){
+            self.game.increaseGravity()
+        })
+
+        this.shapeSpeedMinBtn.addEventListener('click',function(){
+            self.game.decreaseSpeed()
+        })
+        this.shapeSpeedMaxBtn.addEventListener('click',function(){
+            self.game.increaseSpeed()
+        })
     }
 
     addShape(newShape) {
@@ -42,7 +53,7 @@ class ShapeView {
         this.shapeSpeedInp.value = value
     }
     setSquare(value) {
-        this.shapeAreaInp.textContent = 1025
+        this.shapeAreaInp.textContent = value
     }
 }
 exports = ShapeView

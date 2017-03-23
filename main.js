@@ -7,14 +7,14 @@ class Game {
         this.shapeSpeed = 1
         this.offsetShape = 50 //hardcoded click offset
         this.app = new PIXI.Application(512, 512, {backgroundColor: 0x1099bb});
-        this.view = new ShapeView(this.app)
+        this.view = new ShapeView(this)
         this.appHeight = this.app.renderer.height / this.app.renderer.resolution
         this.appWidth =  this.app.renderer.width / this.app.renderer.resolution
         this.count = 1
         this.shapes = []
         this.view.setGravity(this.gravity)
         this.view.setShapeSpeed(this.shapeSpeed)
-        this.view.setShapeCount( this.shapes.length)
+        this.view.setShapeCount(this.shapes.length)
 
         let createShape =  (x,y) => {
             let randomShape = Math.floor(Math.random() * (shapeTypes.length))
@@ -28,7 +28,6 @@ class Game {
            if (e.target.name !== 'hitArea') {
                this.destroyShape(e.target)
            }
-
         })
 
         //cheat to detect click position
@@ -49,17 +48,18 @@ class Game {
         })
 
         this.app.ticker.add(()=> {
-            if (this.count%(60*this.shapeSpeed) == 0) {
+            if (this.count%(60/this.shapeSpeed) == 0) {
                 //generate new shape
                 let randX = Math.floor(Math.random() * (this.appWidth-20))
-                createShape(randX,0)
+
+                createShape(randX,this.gravity < 0 ? this.appHeight : 0)
                 this.count = 1
             } else {
                 this.count ++
             }
 
             this.shapes.forEach((shape)=> {
-                if (shape._texture) shape.y += this.shapeSpeed
+                if (shape._texture) shape.y += this.gravity
 
                 if (shape.y > this.appHeight) {
                     this.destroyShape(shape)
@@ -70,13 +70,12 @@ class Game {
             this.view.setSquare(this.shapes.length)
         })
     }
+
     increaseGravity() {
-        console.log('privet')
         this.gravity++
-        this.view.setGravity(this.shapeSpeed)
+        this.view.setGravity(this.gravity)
     }
     decreaseGravity() {
-        console.log('prive222t')
         this.gravity--
         this.view.setGravity(this.gravity)
     }
