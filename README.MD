@@ -1,0 +1,1 @@
+To launch the project run index.html
