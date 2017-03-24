@@ -29,10 +29,9 @@ class Game {
                 //generate new shape
                 let randX = Math.floor(Math.random() * (this.appWidth-20))
 
-                this.createShape(randX,this.gravity < 0 ? this.appHeight : 0)
+                this.createShape(randX, this.gravity < 0 ? this.appHeight : 0)
                 this.count = 1
-                let pixels = this.app.renderer.extract.pixels(this.app.stage)
-
+                //let pixels = this.app.renderer.extract.pixels(this.app.stage)
                 //todo
                 //for (var i = 0; i < pixels.length; i+=4) {
                 //    if (pixels[i] == 16) {
@@ -46,7 +45,7 @@ class Game {
             this.shapes.forEach((shape)=> {
                 if (shape._texture) shape.y += this.gravity
 
-                if (shape.y > this.appHeight) {
+                if (shape.y > this.appHeight || shape.y < 0) {
                     this.destroyShape(shape)
                 }
             })
