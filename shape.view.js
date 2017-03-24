@@ -55,5 +55,24 @@ class ShapeView {
     setSquare(value) {
         this.shapeAreaInp.textContent = value
     }
+    renderHitArea() {
+        //cheat to detect click position
+        let hitArea = new PIXI.Graphics()
+        hitArea.lineStyle(0);
+        hitArea.beginFill(0xFFFF0B, 0)
+        hitArea.drawRect(0, 0, this.game.appWidth, this.game.appHeight)
+        hitArea.endFill()
+        hitArea.boundsPadding = 0;
+        let hitAreaSprite = new PIXI.Sprite(hitArea.generateCanvasTexture());
+        hitAreaSprite.interactive = true
+        hitAreaSprite.name = 'hitArea'
+        hitArea.zOrder = -10
+        this.addShape(hitAreaSprite)
+
+        let self = this
+        hitAreaSprite.on('pointerup', (e)=> {
+            self.game.createShape(e.data.global.x,e.data.global.y)
+        })
+    }
 }
 exports = ShapeView

@@ -2,9 +2,9 @@ class Shape {
     constructor(type, x, y) {
         this.shape = new PIXI.Graphics()
 
-        this.shape.lineStyle(2);
+        this.shape.lineStyle(0);
         let randColor ="0x"+((1<<24)*Math.random()|0).toString(16)
-        this.shape.beginFill(randColor, 0.5);
+        this.shape.beginFill(randColor, 1);
         let polyPts
 
         //hardcoded primitives
@@ -31,7 +31,12 @@ class Shape {
                 this.shape.drawEllipse(x, y, 80, 40);
                 break
             case 'random':
-                //todo
+                this.shape.moveTo(22, 11);
+                this.shape.arcTo(41, -8, 58, 11, 18);
+                this.shape.arcTo(86, 20, 65, 48, 18);
+                this.shape.arcTo(62, 74, 32, 61, 18);
+                this.shape.arcTo(-4, 69, 4, 40, 18);
+                this.shape.arcTo(-2, 11, 22, 11, 18);
                 break
 
         }
@@ -41,6 +46,9 @@ class Shape {
         let texture = this.shape.generateCanvasTexture();
         this.sprite = new PIXI.Sprite(texture);
         this.sprite.interactive = true;
+        this.sprite.rotation = Math.random()
+        this.sprite.scale.x = this.sprite.scale.y = Math.random()*0.25 + 0.75
+        this.sprite.anchor.set(0.5, 0.5);
         this.sprite.x = x;
         this.sprite.y = y;
     }
