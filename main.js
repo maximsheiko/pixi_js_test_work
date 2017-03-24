@@ -1,14 +1,14 @@
 class Game {
 
     constructor() {
-        this.shapeTypes = ['3 sides', '4 sides', '5 sides', '6 sides', 'circle', 'ellipse','random']
+        this.shapeTypes = ['3 sides', '4 sides', '5 sides', '6 sides', 'circle', 'ellipse', 'random']
         this.gravity = 1
         this.shapeSpeed = 1
         this.shapeSquare = 0
         this.app = new PIXI.Application(512, 512, {backgroundColor: 0x1099bb})
         this.view = new ShapeView(this)
         this.appHeight = this.app.renderer.height / this.app.renderer.resolution
-        this.appWidth =  this.app.renderer.width / this.app.renderer.resolution
+        this.appWidth = this.app.renderer.width / this.app.renderer.resolution
         this.count = 1
         this.shapes = []
         this.view.setGravity(this.gravity)
@@ -17,15 +17,15 @@ class Game {
 
         this.app.stage.interactive = true
         this.app.stage.on('pointertap', (e) => {
-           if (e.target.name !== 'hitArea') {
-               this.destroyShape(e.target)
-           }
+            if (e.target.name !== 'hitArea') {
+                this.destroyShape(e.target)
+            }
         })
 
         this.view.renderHitArea()
 
         this.app.ticker.add(()=> {
-            if (this.count%(60/this.shapeSpeed) == 0) {
+            if (this.count % (60 / this.shapeSpeed) == 0) {
                 //generate new shape
                 let randX = Math.floor(Math.random() * (this.appWidth))
 
@@ -33,22 +33,22 @@ class Game {
                 this.count = 1
 
             } else {
-                this.count ++
+                this.count++
             }
 
-            if (this.count%60 == 0) {
+            if (this.count % 60 == 0) {
                 let pixels = this.app.renderer.extract.pixels()
                 let counterSquare = 0
-               // let counterBack = 0
-                for (var i = 0; i < pixels.length; i+=4) {
-                    if (pixels[i] && pixels[i] !== 16 && pixels[i+2] !== 153 &&  pixels[i+2] !== 187) {
+                //let counterBack = 0
+                for (var i = 0; i < pixels.length; i += 4) {
+                    if (pixels[i] && pixels[i] !== 16 && pixels[i + 1] !== 153 && pixels[i + 2] !== 187) {
                         counterSquare++
                     }
-                    // if (pixels[i] && pixels[i] == 16 && pixels[i+1] == 153 &&  pixels[i+2] == 187) {
+                    // if (pixels[i] && pixels[i] == 16 && pixels[i + 1] == 153 && pixels[i + 2] == 187) {
                     //     counterBack++
                     // }
                 }
-                //console.log(512*512,counterBack,counterSquare)
+                //console.log(512*512,counterBack,counterSquare,512*512-counterBack)
                 this.shapeSquare = counterSquare
             }
 
@@ -65,9 +65,9 @@ class Game {
         })
     }
 
-    createShape(x,y) {
+    createShape(x, y) {
         let randomShape = Math.floor(Math.random() * (this.shapeTypes.length))
-        let newShape = new Shape(this.shapeTypes[randomShape],x,y).sprite;
+        let newShape = new Shape(this.shapeTypes[randomShape], x, y).sprite;
         this.view.addShape(newShape)
         this.shapes.push(newShape)
     }
@@ -76,14 +76,17 @@ class Game {
         this.gravity++
         this.view.setGravity(this.gravity)
     }
+
     decreaseGravity() {
         this.gravity--
         this.view.setGravity(this.gravity)
     }
+
     increaseSpeed() {
         this.shapeSpeed++
         this.view.setShapeSpeed(this.shapeSpeed)
     }
+
     decreaseSpeed() {
         this.shapeSpeed--
         this.view.setShapeSpeed(this.shapeSpeed)
@@ -91,7 +94,7 @@ class Game {
 
     destroyShape(shape) {
         shape.destroy()
-        this.shapes.splice(this.shapes.indexOf(shape),1)
+        this.shapes.splice(this.shapes.indexOf(shape), 1)
     }
 
 }
