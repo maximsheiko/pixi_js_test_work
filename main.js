@@ -16,7 +16,7 @@ class Game {
         this.view.setShapeCount(this.shapes.length)
 
         this.app.stage.interactive = true
-        this.app.stage.on('pointertap', (e, target) => {
+        this.app.stage.on('pointertap', (e) => {
            if (e.target.name !== 'hitArea') {
                this.destroyShape(e.target)
            }
@@ -27,17 +27,19 @@ class Game {
         this.app.ticker.add(()=> {
             if (this.count%(60/this.shapeSpeed) == 0) {
                 //generate new shape
-                let randX = Math.floor(Math.random() * (this.appWidth-20))
+                let randX = Math.floor(Math.random() * (this.appWidth))
 
                 this.createShape(randX, this.gravity < 0 ? this.appHeight : 0)
                 this.count = 1
-                //let pixels = this.app.renderer.extract.pixels(this.app.stage)
-                //todo
-                //for (var i = 0; i < pixels.length; i+=4) {
-                //    if (pixels[i] == 16) {
-                //        this.shapeSquare++
-                //    }
-                //}
+                let pixels = this.app.renderer.extract.pixels()
+
+                let counterSquare = 0
+                for (var i = 0; i < pixels.length; i+=4) {
+                    if (pixels[i] && pixels[i] !== 16 && pixels[i+2] !== 153 &&  pixels[i+2] !== 187) {
+                        counterSquare++
+                    }
+                }
+                this.shapeSquare = counterSquare
             } else {
                 this.count ++
             }
