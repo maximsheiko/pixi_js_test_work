@@ -31,11 +31,11 @@ class Game {
 
                 this.createShape(randX, this.gravity < 0 ? this.appHeight : 0)
                 this.count = 1
-
             } else {
                 this.count++
             }
 
+            //get square every second to
             if (this.count % 60 == 0) {
                 let pixels = this.app.renderer.extract.pixels()
                 let counterSquare = 0
@@ -44,11 +44,7 @@ class Game {
                     if (pixels[i] && pixels[i] !== 16 && pixels[i + 1] !== 153 && pixels[i + 2] !== 187) {
                         counterSquare++
                     }
-                    // if (pixels[i] && pixels[i] == 16 && pixels[i + 1] == 153 && pixels[i + 2] == 187) {
-                    //     counterBack++
-                    // }
                 }
-                //console.log(512*512,counterBack,counterSquare,512*512-counterBack)
                 this.shapeSquare = counterSquare
             }
 

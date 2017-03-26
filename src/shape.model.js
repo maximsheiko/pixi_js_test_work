@@ -4,6 +4,7 @@ class Shape {
 
         this.shape.lineStyle(0);
         let randColor ="0x"+((1<<24)*Math.random()|0).toString(16)
+
         this.shape.beginFill(randColor, 1);
         let polyPts
 
@@ -52,6 +53,10 @@ class Shape {
         this.sprite.x = x;
         this.sprite.y = y;
     }
-}
+
+    drawShape () {
+
+    }
+ }
 
 exports = Shape
