@@ -5,10 +5,8 @@ class Game {
         this.gravity = 1
         this.shapeSpeed = 1
         this.shapeSquare = 0
-        this.app = new PIXI.Application(512, 512, {backgroundColor: 0x1099bb})
-        this.view = new ShapeView(this)
-        this.appHeight = this.app.renderer.height / this.app.renderer.resolution
-        this.appWidth = this.app.renderer.width / this.app.renderer.resolution
+        
+        
         this.count = 1
         this.shapes = []
         this.view.setGravity(this.gravity)
@@ -27,7 +25,7 @@ class Game {
         this.app.ticker.add(()=> {
             if (this.count % (60 / this.shapeSpeed) == 0) {
                 //generate new shape
-                let randX = Math.floor(Math.random() * (this.appWidth))
+                
 
                 this.createShape(randX, this.gravity < 0 ? this.appHeight : 0)
                 this.count = 1
